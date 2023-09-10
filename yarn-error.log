@@ -1,0 +1,49 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn
+
+PATH: 
+  /Users/meijie/.rvm/gems/ruby-2.5.3/bin:/Users/meijie/.rvm/gems/ruby-2.5.3@global/bin:/Users/meijie/.rvm/rubies/ruby-2.5.3/bin:/Users/meijie/.composer/vendor/bin:/usr/local/opt/postgresql@10/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/meijie/.rvm/gems/ruby-2.5.3/bin:/Users/meijie/.rvm/gems/ruby-2.5.3@global/bin:/Users/meijie/.rvm/rubies/ruby-2.5.3/bin:/Users/meijie/.composer/vendor/bin:/usr/local/opt/postgresql@10/bin:/Users/meijie/.rvm/bin
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  12.22.10
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND npm.qdtech.int
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:66:26)
+
+npm manifest: 
+  {
+    "name": "graphql",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+      "dev": "nodemon app.js",
+      "start": "pm2 start pm2.config.js --env prd",
+      "stop": "pm2 stop koa_tasks & pm2 delete koa_tasks"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "koa": "^2.13.4",
+      "koa-bodyparser": "^4.3.0",
+      "koa-cors": "^0.0.16",
+      "koa-router": "^10.1.1",
+      "nodemon": "^2.0.15"
+    },
+    "devDependencies": {
+      "@types/koa": "^2.13.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

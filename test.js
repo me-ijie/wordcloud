@@ -1,7 +1,7 @@
 const fs = require("fs");
 const chartExporter = require("highcharts-export-server");
 // Initialize the exporter
-chartExporter.initPool({file: "test"});
+chartExporter.initPool();
 // Chart details object specifies chart type and data to plot
 const chartDetails = {
    type: "png",

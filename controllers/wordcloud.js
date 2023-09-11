@@ -174,7 +174,7 @@ var example = text.split(/[,\. ]+/g)
 		arr.push(obj);
 	}
 	return arr;
-}, []);
+}, []).sort((a, b) => b.weight - a.weight)
 
 console.log(example)
 
@@ -186,7 +186,7 @@ const wordcloud = async (ctx, next) => {
       type: "png",
       options: {
         chart: { type: 'wordcloud' },
-        colors: ["#6690FA","#74D0F7","#45D6AC","#71D15E","#C5D962","#F7B819","#FF8269","#F58CB7","#B87AE6","#8F7AF5"],
+        colors: ["#111111","red","#45D6AC","#71D15E","#C5D962","#F7B819","#FF8269","#F58CB7","#B87AE6","#8F7AF5"],
         plotOptions: {
           wordcloud: {
             groupPadding: 0.01,
@@ -228,27 +228,40 @@ const wordcloud = async (ctx, next) => {
         }
       }
     };
+    console.time('timer')
 
-    chartExporter.export(chartDetails, (err, res) => {
-      // Get the image data (base64)
-      let imageb64 = res.data;
-      // Filename of the output
-      let outputFile = "wordcloud.png";
-      // Save the image to file
-      fs.writeFileSync(outputFile, imageb64, "base64", function(err) {
-          if (err) console.log(err);
-      });
-      console.log("Saved image!");
-      // ctx.response.set("content-type", "image/png");
-      // ctx.response.set("content-disposition", "attachment; filename=aaa.png");
-      // ctx.body = imageb64;
-      chartExporter.killPool();
-   });
+    const resImg = await new Promise((resolve, reject) => {
+      chartExporter.export(chartDetails, async (err, res) => {
+        // Get the image data (base64)
+        // let imageb64 = res.data;
+        // Filename of the output
+        let outputFile = "wordcloud.png";
+        // Save the image to file
 
-    return ctx.body = {
-      code: 200,
-      msg: '获取信息成功'
-    }
+        // console.log(res.data, 'res.data')
+        console.log("Saved image!");
+
+        chartExporter.killPool();
+        console.log('111111')
+        resolve(res.data)
+     });
+    })
+    let outputFile = 'wordcloud.png'
+    // fs.writeFileSync(outputFile, resImg, "base64", function(err) {
+    //   if (err) console.log(err);
+    // });
+    const newImg = new Buffer(resImg, 'base64')
+    console.log('22222')
+    ctx.response.set("content-type", "image/png");
+    ctx.response.set("content-disposition", "attachment; filename=wordcloud.png");
+    console.timeEnd('timer')
+
+    // ctx.body = resImg;
+    return ctx.body = newImg
+    // {
+    //   code: 200,
+    //   msg: '获取信息成功'
+    // }
   } catch (error) {
     console.log(error)
     ctx.Back(error.message, ctx.ErrCode.INTERNAL_ERROR);
